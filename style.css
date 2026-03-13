@@ -386,8 +386,8 @@ h1, h2, h3, h4, h5 {
 
 .scroll-down {
     position: absolute;
-    left: 50%;
-    bottom: 28px;
+    left: 24%;
+    bottom: 25px;
     transform: translateX(-50%);
     z-index: 3;
 }
@@ -944,17 +944,18 @@ footer {
     }
 
     .hero {
-        background-position: 70% center !important; /* Better framing for faces on mobile */
-        background-attachment: scroll; /* Performance boost */
+        background-position: 55% center !important;
+        background-attachment: scroll; 
+        margin-bottom: 45px;
     }
 
     .couple-names {
-        display: block !important; /* Reset flex column for better wrapping control */
+        display: block !important; 
         margin-bottom: 20px;
     }
 
     .char-reveal {
-        display: inline !important; /* Allow natural inline wrapping */
+        display: inline !important;
         word-break: keep-all;
         white-space: normal;
     }
@@ -993,7 +994,7 @@ footer {
 
 @media (max-width: 480px) {
     .hero {
-        background-position: 72% center !important;
+        background-position: 50% center;
     }
     
     .couple-names .name {
