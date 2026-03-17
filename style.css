@@ -238,6 +238,12 @@ h1, h2, h3, h4, h5 {
     overflow: hidden;
 }
 
+/* Ensure hero background scales and centers nicely on all viewports */
+.hero {
+    background-position: center center;
+    background-size: cover;
+}
+
 .overlay {
     position: absolute;
     inset: 0;
@@ -250,12 +256,15 @@ h1, h2, h3, h4, h5 {
 
 .hero-glow {
     position: absolute;
-    width: 550px;
-    height: 550px;
+    width: min(52vw, 560px);
+    height: min(52vw, 560px);
     border-radius: 50%;
     background: radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, rgba(212, 175, 55, 0.06) 38%, transparent 70%);
     filter: blur(20px);
     animation: glowMove 7s ease-in-out infinite alternate;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-30%);
 }
 
 @keyframes glowMove {
@@ -384,6 +393,107 @@ h1, h2, h3, h4, h5 {
     background: linear-gradient(135deg, #ffe9c6, #e6bf47);
 }
 
+/* Secondary music button (appears next to primary CTA) */
+.music-btn {
+    background: transparent;
+    color: var(--secondary-color);
+    border: 1px solid rgba(212,175,55,0.16);
+    padding: 12px 22px;
+    margin-left: 12px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease, color .15s ease;
+}
+
+.music-btn:hover {
+    transform: translateY(-3px);
+    color: #fff;
+    background: linear-gradient(135deg, rgba(212,175,55,0.14), rgba(123,17,45,0.06));
+}
+
+.music-btn:active { transform: translateY(-1px); }
+
+/* Small circular music icon button (theme-matched) */
+.music-wrap {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+    transform-origin: center;
+    animation: musicFloat 4s ease-in-out infinite;
+}
+
+.music-grid {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 96px;
+    height: 96px;
+    border-radius: 16px;
+    background-image: linear-gradient(rgba(212,175,55,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.06) 1px, transparent 1px);
+    background-size: 16px 16px, 16px 16px;
+    opacity: 0.95;
+    filter: blur(6px) saturate(1.05);
+    transition: transform .4s ease, opacity .4s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.music-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    color: #fff;
+    box-shadow: 0 12px 36px rgba(123,17,45,0.18), 0 6px 18px rgba(212,175,55,0.06);
+    cursor: pointer;
+    transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s ease, filter .18s ease;
+    font-size: 16px;
+    border: none;
+    position: relative;
+    z-index: 2;
+}
+
+.music-icon i { pointer-events: none; transform: translateX(1px); }
+
+.music-icon:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 20px 56px rgba(123,17,45,0.24); filter: brightness(1.04); }
+.music-icon:active { transform: translateY(-1px) scale(0.98); }
+.music-icon:focus { outline: 3px solid rgba(212,175,55,0.22); outline-offset: 4px; }
+
+/* Subtle pulsing ring */
+.music-icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 0 0 rgba(212,175,55,0.20);
+    animation: pulseRing 1.8s infinite;
+    pointer-events: none;
+}
+
+@keyframes pulseRing {
+    0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.28); }
+    70% { box-shadow: 0 0 0 18px rgba(212,175,55,0); }
+    100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+}
+
+@keyframes musicFloat {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@media (max-width: 480px) {
+    .music-btn { display: none; }
+}
+
 .scroll-down {
     position: absolute;
     left: 75px;
@@ -473,6 +583,12 @@ h1, h2, h3, h4, h5 {
     box-shadow: var(--shadow-strong);
 }
 
+/* Ensure card shapes are consistent and don't overflow */
+.msg-card, .premium-card, .glass-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
 .card-shine {
     position: absolute;
     top: -140%;
@@ -516,6 +632,9 @@ h1, h2, h3, h4, h5 {
     border: 1px solid rgba(212, 175, 55, 0.25);
 }
 
+/* Image defaults to keep shapes clean and prevent distortion */
+img { max-width: 100%; height: auto; display: block; object-fit: cover; }
+
 .welcome-icon {
     width: 60px;
     animation: floatIcon 4s ease-in-out infinite;
@@ -556,15 +675,17 @@ h1, h2, h3, h4, h5 {
 }
 
 .intro-img-shape {
-    width: 130px;
-    height: 130px;
-    background: url('elegant_rings_floral_1773229211710.png') center / cover no-repeat;
+    width: min(160px, 22vw);
+    aspect-ratio: 1 / 1;
+    background: url('elegant_rings_floral_1773229211710.png') center center / cover no-repeat;
     border-radius: 42% 58% 65% 35% / 42% 40% 60% 58%;
     box-shadow:
         0 12px 28px rgba(212, 175, 55, 0.24),
         inset 0 0 16px rgba(255, 255, 255, 0.4);
     border: 4px solid rgba(255, 255, 255, 0.8);
     animation: morphShape 8s ease-in-out infinite;
+    display: block;
+    margin: 0 auto 18px;
 }
 
 @keyframes morphShape {

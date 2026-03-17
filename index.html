@@ -53,6 +53,14 @@
             <p class="date-hero fade-up delay-2">Save The Date • 25th May 2026</p>
 
             <a href="#welcome" class="hero-btn fade-up delay-3">Explore Invitation</a>
+            <button id="playMusic" class="hero-btn music-btn fade-up delay-3" aria-pressed="false">Play Music</button>
+            <span class="music-wrap fade-up delay-3">
+                <div class="music-grid" aria-hidden="true"></div>
+                <button id="playIcon" class="music-icon" aria-pressed="false" aria-label="Play music">
+                    <i class="fas fa-play" aria-hidden="true"></i>
+                </button>
+            </span>
+            <audio id="bg-audio" preload="none" aria-hidden="true"></audio>
 
             <!-- <div class="scroll-down">
                 <span></span>
@@ -589,19 +597,28 @@
             hero.style.backgroundPosition = `center ${scrollY * 0.35}px`;
         });
 
-        // RSVP Form Handler
-        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button');
-            btn.innerText = "Sending Love...";
-            btn.disabled = true;
-            setTimeout(() => {
-                btn.innerText = "Response Received!";
-                btn.style.background = "#28a745";
-                btn.style.color = "#fff";
-                this.reset();
-            }, 2000);
-        });
+        // RSVP Form Handler (guarded — only attach if form exists)
+        (function(){
+            const rsvpForm = document.getElementById('rsvpForm');
+            if (!rsvpForm) return; // no form on this page
+
+            rsvpForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const btn = this.querySelector('button');
+                if (btn) {
+                    btn.innerText = "Sending Love...";
+                    btn.disabled = true;
+                }
+                setTimeout(() => {
+                    if (btn) {
+                        btn.innerText = "Response Received!";
+                        btn.style.background = "#28a745";
+                        btn.style.color = "#fff";
+                    }
+                    this.reset();
+                }, 2000);
+            });
+        })();
         // Back to Top Logic
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
@@ -612,5 +629,66 @@
             }
         });
     </script>
+
+    <script>
+        // Music play for 30 seconds — supports both text button and small icon button
+        (function(){
+            const playBtn = document.getElementById('playMusic');
+            const playIcon = document.getElementById('playIcon');
+            const audio = document.getElementById('bg-audio');
+            // Set the audio src (encode URI for spaces)
+            audio.src = encodeURI('song/Aaj Sajeya  Alaya F  Goldie Sohel Punit M Trending Wedding Song 2021  Lyrical VideoDharma 2.0.mp3');
+
+            let timeoutId = null;
+
+            function setPlayingUI(isPlaying) {
+                if (playBtn) {
+                    playBtn.setAttribute('aria-pressed', String(Boolean(isPlaying)));
+                    playBtn.textContent = isPlaying ? 'Playing...' : 'Play Music';
+                }
+                if (playIcon) {
+                    playIcon.setAttribute('aria-pressed', String(Boolean(isPlaying)));
+                    const i = playIcon.querySelector('i');
+                    if (i) {
+                        i.classList.toggle('fa-play', !isPlaying);
+                        i.classList.toggle('fa-pause', isPlaying);
+                    }
+                }
+            }
+
+            function stopAudio() {
+                audio.pause();
+                audio.currentTime = 0;
+                clearTimeout(timeoutId);
+                setPlayingUI(false);
+            }
+
+            function playThirtySeconds() {
+                if (!audio) return;
+                audio.currentTime = 0;
+                audio.play().catch(()=>{});
+                setPlayingUI(true);
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    stopAudio();
+                }, 30000);
+            }
+
+            function togglePlayback() {
+                if (audio.paused) playThirtySeconds();
+                else stopAudio();
+            }
+
+            if (playBtn) playBtn.addEventListener('click', togglePlayback);
+            if (playIcon) playIcon.addEventListener('click', togglePlayback);
+
+            // Reset UI when audio naturally ends
+            audio.addEventListener('ended', () => {
+                clearTimeout(timeoutId);
+                setPlayingUI(false);
+            });
+        })();
+    </script>
+
 </body>
 </html>
