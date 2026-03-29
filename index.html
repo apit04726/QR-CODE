@@ -619,14 +619,30 @@
         }
         animateParticles();
 
-        // Hero subtle parallax
+        // Hero height stabilization for mobile (prevents jumping on address bar hide/show)
+        (function() {
+            function lockHeroHeight() {
+                if (window.innerWidth <= 768) {
+                    const hero = document.querySelector('.hero');
+                    if (hero) {
+                        hero.style.height = window.innerHeight + 'px';
+                        hero.style.minHeight = 'auto'; // override dvh
+                    }
+                }
+            }
+            window.addEventListener('load', lockHeroHeight);
+            // Don't resize on every scroll, only on orientation change if needed
+            window.addEventListener('orientationchange', () => {
+                setTimeout(lockHeroHeight, 200);
+            });
+        })();
+
+        // Hero subtle parallax (Only on large screens)
         const hero = document.querySelector(".hero");
         window.addEventListener("scroll", () => {
-            if (window.innerWidth > 1024) { // Disable parallax on mobile/tablet to avoid 'zoom' issues
+            if (window.innerWidth > 1024) { 
                 const scrollY = window.scrollY;
                 hero.style.backgroundPosition = `center ${scrollY * 0.35}px`;
-            } else {
-                hero.style.backgroundPosition = "center center"; // Ensure centered on mobile
             }
         }, { passive: true });
 

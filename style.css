@@ -1212,11 +1212,12 @@ footer {
     }
 
     .hero {
-        background-position: center bottom !important; /* Adjusted for mobile view better */
+        background-position: center center !important; 
         background-attachment: scroll;
         background-size: cover;
-        margin-bottom: 30px;
-        min-height: 100dvh;
+        margin-bottom: 20px;
+        min-height: 100svh; /* Use static small viewport height as fallback */
+        height: 100svh;
     }
 
     .couple-names {
