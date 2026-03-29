@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Engagement Invitation | V & K</title>
     <link rel="icon" type="image/png" href="favicon.png" />
 
@@ -544,7 +544,7 @@
             }
         }
 
-        const heartCount = window.innerWidth < 768 ? 10 : 22; // Reduced on mobile
+        const heartCount = window.innerWidth < 480 ? 6 : (window.innerWidth < 768 ? 10 : 22); // Reduced on mobile
         for (let i = 0; i < heartCount; i++) {
             hearts.push(new Heart());
         }
@@ -604,7 +604,7 @@
             }
         }
 
-        const pCount = window.innerWidth < 768 ? 20 : 45; // Reduced on mobile
+        const pCount = window.innerWidth < 480 ? 12 : (window.innerWidth < 768 ? 20 : 45); // Reduced on mobile
         for (let i = 0; i < pCount; i++) {
             particles.push(new Particle());
         }

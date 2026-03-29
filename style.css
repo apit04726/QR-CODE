@@ -54,8 +54,14 @@
 }
 
 @media (max-width: 1024px) {
-    .bokeh-depth {
+    .bokeh-depth,
+    .custom-cursor,
+    .cursor-follower {
         display: none !important;
+    }
+    
+    body {
+        cursor: auto !important;
     }
 }
 
@@ -105,7 +111,8 @@
     box-sizing: border-box;
 }
 
-html {
+html, body {
+    -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
     scroll-behavior: smooth;
 }
 
@@ -119,7 +126,6 @@ body {
     animation: backgroundFlow 18s ease infinite;
     position: relative;
     cursor: none;
-    -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
 }
 
 /* GPU Accelerated Sections */
