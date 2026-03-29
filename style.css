@@ -159,10 +159,17 @@ h5 {
     font-family: 'Parisienne', cursive;
 }
 
-.container {
+.container, .container-large {
     width: 90%;
-    max-width: 700px;
     margin: 0 auto;
+}
+
+.container {
+    max-width: 700px;
+}
+
+.container-large {
+    max-width: 850px; /* Increased to feel more "Big" like the hero */
 }
 
 .section-space {
@@ -1527,85 +1534,28 @@ footer {
 
 .love-card-wrapper {
     position: relative;
-    width: min(92%, 440px);
+    width: min(95%, 800px); /* Scaled up to be similar to hero prominence */
     margin: 0 auto;
     text-align: center;
 }
 
-/* Soft warm glow behind the frame */
-.love-aura {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120%;
-    height: 110%;
-    background: radial-gradient(circle at center,
-        rgba(212, 175, 55, 0.18) 0%,
-        rgba(123, 17, 45, 0.08) 40%,
-        transparent 75%);
-    filter: blur(45px);
-    z-index: 0;
-    pointer-events: none;
-    animation: auraPulseFix 10s ease-in-out infinite alternate;
-}
+/* Removed love-aura as requested */
 
-@keyframes auraPulseFix {
-    0%   { opacity: 0.4; transform: translate(-50%, -50%) scale(1);    }
-    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.12); }
-}
-
-/* ---- Image Frame with Built-in Rotating Border ---- */
+/* Simple premium frame with just a clean border */
 .love-image-frame {
     position: relative;
     width: 100%;
     aspect-ratio: 9 / 16;
     border-radius: 32px;
     z-index: 2;
-    overflow: hidden; /* Clips the rotating border inside */
+    overflow: hidden;
     background: #fff;
-    padding: 10px; /* Creates the elegant white inner margin */
-    
-    /* Smooth floating with cubic-bezier */
-    animation: frameFloatFix 7s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate,
-               frameGlowLight 4s ease-in-out infinite alternate;
-    
-    box-shadow: 
-        0 25px 60px rgba(123, 17, 45, 0.15),
-        0 8px 25px rgba(212, 175, 55, 0.1);
+    padding: 12px; /* Inner margin */
+    border: 1px solid rgba(212, 175, 55, 0.3); /* Clean golden border */
+    box-shadow: var(--shadow-soft);
 }
 
-/* Breathing Outer Glow */
-@keyframes frameGlowLight {
-    from { 
-        box-shadow: 0 25px 60px rgba(123, 17, 45, 0.15), 0 0 0 0 rgba(212, 175, 55, 0.15); 
-    }
-    to { 
-        box-shadow: 0 35px 80px rgba(123, 17, 45, 0.22), 0 0 30px 5px rgba(212, 175, 55, 0.35); 
-    }
-}
-
-/* Rotating conic-gradient border light — Refined for "Smooth Light" effect */
-.love-image-frame::before {
-    content: "";
-    position: absolute;
-    inset: -150%; 
-    background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        transparent 100deg,
-        rgba(244, 226, 163, 0.6) 130deg,
-        rgba(212, 175, 55, 0.8) 180deg,
-        rgba(255, 255, 255, 0.9) 210deg,
-        rgba(212, 175, 55, 0.8) 240deg,
-        rgba(244, 226, 163, 0.6) 270deg,
-        transparent 300deg,
-        transparent 360deg
-    );
-    animation: rotateBorderFix 6s linear infinite; /* Slower for premium feel */
-    z-index: -1;
-    filter: blur(4px); /* Increased blur for light-trail effect */
-}
+/* Animations and rotating borders removed as requested */
 
 /* Inner shadow for depth */
 .love-image-frame::after {
@@ -1628,7 +1578,67 @@ footer {
     to   { transform: translateY(-12px); }
 }
 
-/* Image inside the frame */
+/* ---- Foreground Colorful Celebration ---- */
+.confetti-foreground {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10; /* Ensures it is on TOP of everything */
+    overflow: hidden;
+}
+
+.c-piece {
+    position: absolute;
+    width: 8px; /* Slightly smaller for hearts */
+    height: 8px;
+    top: -20px;
+    opacity: 0;
+    animation: confettiFallSway 10s linear infinite;
+    transform: rotate(45deg); /* Base rotation for heart shape */
+}
+
+/* CSS Heart Shape Logic */
+.c-piece::before,
+.c-piece::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.c-piece::before { top: -4px; left: 0; }
+.c-piece::after { left: -4px; top: 0; }
+
+/* Vibrant Multi-Colors matching the reference image */
+.red   { background: #ff4d4d; }
+.blue  { background: #4d94ff; }
+.gold  { background: #ffd700; }
+.pink  { background: #ff66b2; }
+.green { background: #47d147; }
+.cyan  { background: #00cccc; }
+
+/* Randomizing positions and delays */
+.r1 { left: 5%; animation-duration: 9s; }
+.r2 { left: 15%; animation-duration: 11s; animation-delay: 1.2s; }
+.r3 { left: 25%; animation-duration: 10s; animation-delay: 2.5s; }
+.r4 { left: 35%; animation-duration: 12s; animation-delay: 0.5s; }
+.r5 { left: 45%; animation-duration: 9s; animation-delay: 3.2s; }
+.r6 { left: 55%; animation-duration: 13s; animation-delay: 1s; }
+.r7 { left: 65%; animation-duration: 10s; animation-delay: 4.8s; }
+.r8 { left: 75%; animation-duration: 11s; animation-delay: 2.1s; }
+.r9 { left: 85%; animation-duration: 9s; animation-delay: 5.5s; }
+.r10 { left: 95%; animation-duration: 12s; animation-delay: 1.8s; }
+
+@keyframes confettiFallSway {
+    0%   { transform: translateY(0) rotate(45deg) translateX(0); opacity: 0; }
+    10%  { opacity: 0.9; }
+    90%  { opacity: 0.9; }
+    100% { transform: translateY(110vh) rotate(765deg) translateX(25px); opacity: 0; }
+}
+
+/* Keep the image frame clean as requested */
 .love-image {
     width: 100%;
     height: 100%;
@@ -1638,8 +1648,6 @@ footer {
     position: relative;
     z-index: 1;
     filter: brightness(1.02) contrast(1.02);
-    border: none;
-    outline: none;
 }
 
 /* ---- Text Content ---- */
@@ -1661,24 +1669,8 @@ footer {
 
 
 .shimmer-text {
-    background: linear-gradient(
-        90deg, 
-        var(--primary-color) 0%, 
-        #d4af37 30%, 
-        var(--primary-color) 50%, 
-        #d4af37 70%, 
-        var(--primary-color) 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmerFix 5s ease-in-out infinite;
-    text-shadow: 0 4px 10px rgba(123, 17, 45, 0.08);
-}
-
-@keyframes shimmerFix {
-    0% { background-position: -100% 0; }
-    100% { background-position: 100% 0; }
+    color: var(--primary-color);
+    text-shadow: 0 2px 8px rgba(123, 17, 45, 0.12);
 }
 
 .love-subtitle {
@@ -1703,10 +1695,11 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .love-story-section { padding: 50px 0 60px; }
-    .love-card-wrapper { width: min(85%, 340px); }
-    .love-image-frame { padding: 8px; border-radius: 26px; }
-    .love-image { border-radius: 18px; }
-    .love-title { font-size: 2.8rem; }
-    .love-subtitle { font-size: 0.85rem; letter-spacing: 2px; }
+    .love-story-section { padding: 25px 0 40px; } /* Reduced padding for more vertical space */
+    .container-large { width: 95%; max-width: 100%; } /* Allow full expansion on mobile */
+    .love-card-wrapper { width: 96%; max-width: 600px; } /* Even wider for "moti" feel */
+    .love-image-frame { padding: 6px; border-radius: 20px; }
+    .love-image { border-radius: 14px; }
+    .love-title { font-size: 2.2rem; padding: 5px 0; margin-bottom: 0; }
+    .love-subtitle { font-size: 0.75rem; letter-spacing: 1.5px; }
 }
