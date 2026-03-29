@@ -110,9 +110,18 @@
     </section>
 
     <!-- Love Story Section -->
-    <section class="love-story-section section-space" data-aos="zoom-in-up" data-aos-duration="1500">
-        <div class="container">
             <div class="love-card-wrapper">
+                <!-- Magical Aura & Atmosphere -->
+                <div class="magical-aura"></div>
+                <div class="heart-stream">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                </div>
+
                 <div class="floating-elements">
                     <i class="fas fa-heart heart-1"></i>
                     <i class="fas fa-heart heart-2"></i>
@@ -122,17 +131,17 @@
                 </div>
 
                 <div class="love-image-frame">
+                    <div class="light-sweep"></div>
+                    <div class="sparkle-overlay"></div>
                     <img src="image.png" alt="Couple Moment" class="love-image" />
                     <div class="frame-overlay"></div>
                 </div>
 
                 <div class="love-content">
-                    <h2 class="love-title parisienne">A Beautiful Journey</h2>
+                    <h2 class="love-title parisienne shimmer-text">A Beautiful Journey</h2>
                     <p class="love-subtitle">Two Hearts, One Soul, Forever Together</p>
                 </div>
             </div>
-        </div>
-    </section>
 
     <!-- Divider -->
     <div class="section-divider" data-aos="zoom-in">
@@ -300,7 +309,8 @@
                 <a href="#" class="social-link" aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://maps.app.goo.gl/iXMa8iHeij8GMz1Q7" class="social-link" aria-label="Google Maps" target="_blank">
+                <a href="https://maps.app.goo.gl/iXMa8iHeij8GMz1Q7" class="social-link" aria-label="Google Maps"
+                    target="_blank">
                     <i class="fas fa-map-marker-alt"></i>
                 </a>
             </div>
@@ -378,39 +388,41 @@
             follower.style.transform = 'scale(1)';
         });
 
-        // Bokeh Depth Logic
+        // Bokeh Depth Logic - Only runs on large screens
         const bokehContainer = document.getElementById('bokeh-depth');
-        function createPetal() {
-            const petal = document.createElement('div');
-            petal.className = 'bokeh-petal';
-            const size = Math.random() * 80 + 40;
-            petal.style.width = size + 'px';
-            petal.style.height = size + 'px';
-            petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.top = Math.random() * 100 + 'vh';
+        if (window.innerWidth > 1024 && bokehContainer) {
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.className = 'bokeh-petal';
+                const size = Math.random() * 80 + 40;
+                petal.style.width = size + 'px';
+                petal.style.height = size + 'px';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.top = Math.random() * 100 + 'vh';
 
-            // Random Hsla for subtle color variety
-            const hue = Math.random() * 20 - 10; // Around warm tones
-            petal.style.background = `radial-gradient(circle, hsla(${30 + hue}, 100%, 80%, 0.4) 0%, transparent 75%)`;
+                // Random Hsla for subtle color variety
+                const hue = Math.random() * 20 - 10; // Around warm tones
+                petal.style.background = `radial-gradient(circle, hsla(${30 + hue}, 100%, 80%, 0.4) 0%, transparent 75%)`;
 
-            bokehContainer.appendChild(petal);
+                bokehContainer.appendChild(petal);
 
-            // Subtle floating motion
-            let posX = 0;
-            let posY = 0;
-            const animatePetal = () => {
-                posX += Math.sin(Date.now() / 2000) * 0.5;
-                posY -= 0.5;
-                petal.style.transform = `translate(${posX}px, ${posY}px)`;
-                if (parseFloat(petal.style.top) + posY < -10) {
-                    petal.remove();
-                } else {
-                    requestAnimationFrame(animatePetal);
-                }
-            };
-            animatePetal();
+                // Subtle floating motion
+                let posX = 0;
+                let posY = 0;
+                const animatePetal = () => {
+                    posX += Math.sin(Date.now() / 2000) * 0.5;
+                    posY -= 0.5;
+                    petal.style.transform = `translate3d(${posX}px, ${posY}px, 0)`; // GPU Accelerated
+                    if (parseFloat(petal.style.top) + posY < -10) {
+                        petal.remove();
+                    } else {
+                        requestAnimationFrame(animatePetal);
+                    }
+                };
+                animatePetal();
+            }
+            setInterval(createPetal, 4500); // Slower generation
         }
-        setInterval(createPetal, 3000);
 
         // Character Reveal Support (Word-aware to prevent breaking mid-word)
         function initReveals() {
@@ -504,7 +516,7 @@
             canvas.height = window.innerHeight;
         }
         resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
+        window.addEventListener("resize", resizeCanvas, { passive: true });
 
         class Heart {
             constructor() {
@@ -548,7 +560,8 @@
             }
         }
 
-        for (let i = 0; i < 22; i++) {
+        const heartCount = window.innerWidth < 768 ? 10 : 22; // Reduced on mobile
+        for (let i = 0; i < heartCount; i++) {
             hearts.push(new Heart());
         }
 
@@ -572,7 +585,7 @@
             pCanvas.height = window.innerHeight;
         }
         resizePCanvas();
-        window.addEventListener("resize", resizePCanvas);
+        window.addEventListener("resize", resizePCanvas, { passive: true });
 
         class Particle {
             constructor() {
@@ -607,7 +620,8 @@
             }
         }
 
-        for (let i = 0; i < 45; i++) {
+        const pCount = window.innerWidth < 768 ? 20 : 45; // Reduced on mobile
+        for (let i = 0; i < pCount; i++) {
             particles.push(new Particle());
         }
 
@@ -624,9 +638,13 @@
         // Hero subtle parallax
         const hero = document.querySelector(".hero");
         window.addEventListener("scroll", () => {
-            const scrollY = window.scrollY;
-            hero.style.backgroundPosition = `center ${scrollY * 0.35}px`;
-        });
+            if (window.innerWidth > 1024) { // Disable parallax on mobile/tablet to avoid 'zoom' issues
+                const scrollY = window.scrollY;
+                hero.style.backgroundPosition = `center ${scrollY * 0.35}px`;
+            } else {
+                hero.style.backgroundPosition = "center center"; // Ensure centered on mobile
+            }
+        }, { passive: true });
 
         // RSVP Form Handler (guarded — only attach if form exists)
         (function () {
@@ -660,7 +678,7 @@
                     backToTopBtn.classList.remove('active');
                 }
             }
-        });
+        }, { passive: true });
     </script>
 
     <script>
