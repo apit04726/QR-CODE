@@ -1219,11 +1219,11 @@ footer {
     }
 
     .hero {
-        background-position: center center !important; 
+        background-position: center 15% !important; /* Keep faces framed higher up */
         background-attachment: scroll;
         background-size: cover;
         margin-bottom: 20px;
-        min-height: 100svh; /* Use static small viewport height as fallback */
+        min-height: 100svh; 
         height: 100svh;
     }
 
@@ -1246,27 +1246,53 @@ footer {
         /* Keep animation capability */
     }
 
-    .couple-names .name {
-        font-size: clamp(2.5rem, 10vw, 3.8rem);
-        display: inline;
-        /* Keep on same line if possible */
-    }
-
     .tagline {
-        font-size: 0.8rem;
-        letter-spacing: 2.5px;
-        margin-bottom: 8px;
-    }
-
-    .sub-title {
-        font-size: 1rem;
-        letter-spacing: 1px;
+        font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+        letter-spacing: 2px;
         margin-bottom: 10px;
     }
 
-    .date-hero {
-        font-size: 0.85rem;
+    .sub-title {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+    }
+
+    .couple-names {
         margin-bottom: 20px;
+        gap: 4px;
+    }
+
+    .couple-names .name {
+        font-size: clamp(2.2rem, 11vw, 4.2rem);
+        display: inline-block;
+        line-height: 1.1;
+    }
+
+    .couple-names .amp {
+        font-size: clamp(2rem, 8vw, 3.2rem);
+        margin: -5px 0;
+    }
+
+    .date-hero {
+        font-size: clamp(0.8rem, 2.8vw, 0.95rem);
+        margin-bottom: 25px;
+    }
+
+    .hero-btn {
+        padding: 12px 28px;
+        font-size: 0.9rem;
+    }
+
+    .music-wrap {
+        margin-left: 12px;
+        display: inline-block;
+    }
+    
+    .music-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 15px;
     }
 
     .custom-cursor,
